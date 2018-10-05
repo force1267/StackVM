@@ -1,0 +1,14 @@
+(128) .main (10) {
+    .dbz push 64 handler
+    2 push
+    2 sub push
+    12 div push
+    6 sub push
+    skip
+    halt
+}
+.dbz (9) {
+    err 754 push
+    skip
+    halt
+}
