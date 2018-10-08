@@ -1,0 +1,4 @@
+(128) .main {
+    5 temp
+    1 push 1 add push pop push
+}

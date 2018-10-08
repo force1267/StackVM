@@ -14,7 +14,9 @@ _minimal: _dir
 
 _script_test: _dir
 	$(ASSM) ./scripts/test.assm $(BUILD_DIR)/test.bin
-_scripts: _script_test
+_script_fibo: _dir
+	$(ASSM) ./scripts/fibo.assm $(BUILD_DIR)/fibo.bin
+_scripts: _script_test _script_fibo
 
 run: _script_test
 	$(BUILD_DIR)/vm $(BUILD_DIR)/test.bin
