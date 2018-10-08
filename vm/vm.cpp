@@ -130,11 +130,11 @@ class StackVM {
                 acc << " " << sp << ":" << memory[br + sp] << " at " << pc << " from " << br << " ,err " << err << "]" << endl;
                 break;
             case 129: // goto (acc)
-                pc = acc - 1 + br;
+                pc = acc - 1;
                 break;
             case 130: // test (tos, acc)
                 if(memory[br + sp--] == 0)
-                    pc = acc - 1 + br;
+                    pc = acc - 1;
                 break;
             case 131: // handled ()
                 // continue last instructions
