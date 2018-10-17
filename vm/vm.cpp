@@ -126,8 +126,13 @@ class StackVM {
 
             // program flow
             case 128: // skip
-                /*if(verbose)*/ cout << "skip [" <<
-                acc << " " << sp << ":" << memory[br + sp] << " at " << pc << " from " << br << " ,err " << err << "]" << endl;
+                /*if(verbose)*/ cout << "skip [" << hex <<
+                acc << " " << dec << sp << ":" << hex << memory[br + sp] <<
+                " at " << dec << pc << " from " << br;
+                if(err != 0) {
+                    cout << " ,err " << err;
+                }
+                cout << "]" << endl;
                 break;
             case 129: // goto (acc)
                 pc = acc - 1;
