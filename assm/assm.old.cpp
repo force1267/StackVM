@@ -47,13 +47,9 @@ bool isDotName(string& line) {
     return line[0] == '.';
 }
 
-bool isRefName(string& line) {
-    return line[0] == ':';
-}
-
 bool get_bin(string subs, i32& bin) {
     bool ok = false;
-    if(isDotName(subs)) { // if .name
+    if(isDotName(subs)) { // if (i32)
         note* n = 0;
         class notefinder:public LinkedList<note*>::callback {
             string name;
@@ -70,8 +66,7 @@ bool get_bin(string subs, i32& bin) {
             bin = n->address;
             ok = true;
         } else {
-            subs[0] = ':';
-            cout << "reference " << subs << " is not decleared." << endl;
+            cout << "dotname " << subs << " is not decleared." << endl;
             ok = false;
         }
     } else if(isNumber(subs)) { // if i32
@@ -243,27 +238,18 @@ vector<i32> compileToInstructions(string& contents) {
     while (isss) {
         string subs;
         isss >> subs;
-        if(subs == "{" || subs == "}") {
-            // pass
-        } else if(subs == "{") { // TOOD : BUG do not use blocks
-            i32 scope = 1;
+        if(subs == "{") {
             ndat *block = new ndat('b', "");
             string word = "{";
-            while(scope > 0 && isss) {
+            while(word != "}" && isss) {
                 isss >> word;
-                if(word == "}") {
-                    scope --;
-                } else if(word == "{") {
-                    scope ++;
-                } else {
+                if(word != "}") {
                     block->line += " " + word;
-                    if(!isRefName(word)) {
-                        addr ++;
-                    }
+                    addr ++;
                 }
             }
             queue.push(block);
-            if(word[word.length() - 1] != '}' || scope != 0) {
+            if(word[word.length() - 1] != '}' ) {
                 bin.clear();
                 return bin;
             }
@@ -278,11 +264,10 @@ vector<i32> compileToInstructions(string& contents) {
             istringstream num(skip->line);
             num >> b;
             addr += b;
-        } else if(isRefName(subs)) {
+        } else if(isDotName(subs)) {
             // ndat *dot = new ndat('d', "");
             // dot->line = subs;
             // queue.push(dot);
-            subs[0] = '.';
             note *n = new note(subs, addr);
             dotnames.push(n);
         } else {
@@ -296,10 +281,22 @@ vector<i32> compileToInstructions(string& contents) {
     addr = 0;
     while (queue.shift(dat)) {
         if(dat->type == 'b') { // block
-            vector<i32> bbin = compileToInstructions(dat->line);
-            for(i32 i = 0; i < bbin.size(); i++) {
-                bin.push_back(bbin[i]);
+            istringstream iss(dat->line);
+            while (iss) {
+                string subs;
+                iss >> subs;
+                i32 b;
+                if(get_bin(subs, b)) {
+                    bin.push_back(b);
+                    addr ++;
+                } else {
+                    cout << "undefined instruction : " << subs << endl;
+                    bin.clear();
+                    return bin;
+                }
             }
+            bin.pop_back();// there will be an strange string at the end
+            addr--;
         } else if(dat->type == 'c') { // code
             i32 b;
             if(get_bin(dat->line, b)) {
