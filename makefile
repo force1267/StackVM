@@ -8,7 +8,8 @@ _vm: _dir
 	$(CC) ./vm/main.cpp -o $(BUILD_DIR)/vm
 _assm: _dir
 	$(CC) ./assm/assm.cpp -o $(BUILD_DIR)/assm
-
+_ivst: _dir
+	$(CC) ./assm/ivst.cpp -o $(BUILD_DIR)/ivst
 _minimal: _dir
 	$(CC) ./minimal/main.cpp -o $(BUILD_DIR)/minimal
 
@@ -21,7 +22,7 @@ _scripts: _script_test _script_fibo
 run: _script_test
 	$(BUILD_DIR)/vm $(BUILD_DIR)/test.bin
 
-all: _dir _assm _vm _scripts _minimal
+all: _dir _assm _ivst _vm _scripts _minimal
 	
 clean:
 	rm -rf $(BUILD_DIR)/*
