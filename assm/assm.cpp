@@ -245,7 +245,7 @@ vector<i32> compileToInstructions(string& contents) {
         isss >> subs;
         if(subs == "{" || subs == "}") {
             // pass
-        } else if(subs == "{") { // TOOD : BUG do not use blocks
+        } else if(subs == "{") { // TOOD : BUG ;do not use blocks
             i32 scope = 1;
             ndat *block = new ndat('b', "");
             string word = "{";
