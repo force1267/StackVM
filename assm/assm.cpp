@@ -155,7 +155,18 @@ bool get_bin(string subs, i32& bin) {
             bin = 0x40000000 + 42;
             ok = true;
         }
-
+        if(subs == "eq") { // eq (acc, tos) -> acc
+            bin = 0x40000000 + 43;
+            ok = true;
+        }
+        if(subs == "lt") { // lt (acc, tos) -> acc
+            bin = 0x40000000 + 44;
+            ok = true;
+        }
+        if(subs == "gt") { // gt (acc, tos) -> acc
+            bin = 0x40000000 + 45;
+            ok = true;
+        }
         // program flow
         if(subs == "skip") { // skip
             bin = 0x40000000 + 128;

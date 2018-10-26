@@ -123,7 +123,18 @@ class StackVM {
                 // bitwise right shift of 'acc' ,'tos' times
                 acc = acc >> memory[br + sp--];
                 break;
-
+            case 43: // eq (acc, tos) -> acc
+                // is acc == tos
+                acc = acc == memory[br + sp--];
+                break;
+            case 44: // lt (acc, tos) -> acc
+                // is acc < tos
+                acc = acc < memory[br + sp--];
+                break;
+            case 45: // gt (acc, tos) -> acc
+                // is acc > tos
+                acc = acc > memory[br + sp--];
+                break;
             // program flow
             case 128: // skip
                 /*if(verbose)*/ cout << "skip [" << hex <<
@@ -138,6 +149,7 @@ class StackVM {
                 pc = acc - 1;
                 break;
             case 130: // test (tos, acc)
+                // if(tos) pass else goto acc
                 if(memory[br + sp--] == 0)
                     pc = acc - 1;
                 break;
