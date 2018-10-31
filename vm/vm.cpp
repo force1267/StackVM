@@ -202,11 +202,12 @@ class StackVM {
 
             // memory control
             case 256: // read (acc) -> acc
-                acc = memory[acc];
+                // acc = mem[acc]
+                acc = memory[br + acc];
                 break;
             case 257: // write (acc, tos)
-                //mem[tos] = acc
-                memory[br + sp--] = acc;
+                //mem[acc] = tos
+                memory[acc] = br + sp--;
                 break;
 
             // undefined instruction
