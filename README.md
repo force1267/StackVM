@@ -66,7 +66,7 @@ bitwise right shift of 'acc' ,'tos' times
 ##### 44: lt (acc, tos) -> acc is acc < tos
 < bool check
 ##### 45: gt (acc, tos) -> acc is acc > tos
-> bool check
+\> bool check
 #### program flow
 ##### 128: skip
 like pass in python.
